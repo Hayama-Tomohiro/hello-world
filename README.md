@@ -1,2 +1,3 @@
 # hello-world
-Practice
+
+I'm studying GitHub. My first commit!
