@@ -13,11 +13,15 @@
 	<div class="container-fluid bg-info">
 		<h1>■</h1>
 	</div>
+	<div>
+		<p>公開状態<span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle=popover data-placement="right" data-container="body" data-trigger="hover" data-html="true" title="ここで改行<br><br>する！"></span></p>
+	</div>
 	<script>
 		$(function() {
 			$('h1').click(function() {
 				$(this).css('color', 'red')
 			});
+			$('[data-toggle=popover]').popover();
 		});
 	</script>
 </body>
