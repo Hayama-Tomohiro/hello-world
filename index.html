@@ -14,15 +14,36 @@
 		<h1>■</h1>
 	</div>
 	<div>
-		<p>公開状態<span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle=popover data-placement="right" data-container="body" data-trigger="hover" data-html="true" title="ここで改行<br><br>する！"></span></p>
+		<p>公開状態<span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="popover" data-placement="right"></span></p>
+		<button class="btn btn-success">ボタン</button>
 	</div>
 	<script>
 		$(function() {
 			$('h1').click(function() {
-				$(this).css('color', 'red')
+				$(this).css('color', 'red');
 			});
-			$('[data-toggle=popover]').popover();
+			$('[data-toggle=popover]').popover({
+				container: 'body',
+				trigger: 'hover',
+				html: true
+			});
+			$('button').click(function() {
+				$('span').attr('data-original-title', '<h1>タイトル</h1>');
+				$('span').attr('data-content', drawPopoverHtml());
+			});
 		});
+		function drawPopoverHtml() {
+			var html = '';
+			html += '<table class="table">';
+			html += '  <thead>';
+			html += '    <tr><th style="border-bottom: 0px">サンプル</th></tr>';
+			html += '  </thead>';
+			html += '  <tbody>';
+			html += '    <tr><td>サンプル</td></tr>';
+			html += '  </tbody>';
+			html += '</table>';
+			return html;
+		}
 	</script>
 </body>
 </html>
