@@ -14,7 +14,7 @@
 		<h1>■</h1>
 	</div>
 	<div>
-		<p>公開状態<span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="popover" data-placement="right"></span></p>
+		<p>公開状態<span class="glyphicon glyphicon-ok" aria-hidden="true" data-toggle="popover"></span></p>
 		<button class="btn btn-success">ボタン</button>
 	</div>
 	<script>
@@ -25,7 +25,8 @@
 			$('[data-toggle=popover]').popover({
 				container: 'body',
 				trigger: 'hover',
-				html: true
+				html: true,
+				placement: 'right'
 			});
 			$('button').click(function() {
 				$('span').attr('data-original-title', '<h1>タイトル</h1>');
@@ -34,9 +35,9 @@
 		});
 		function drawPopoverHtml() {
 			var html = '';
-			html += '<table class="table">';
+			html += '<table>';
 			html += '  <thead>';
-			html += '    <tr><th style="border-bottom: 0px">サンプル</th></tr>';
+			html += '    <tr><th>サンプル</th></tr>';
 			html += '  </thead>';
 			html += '  <tbody>';
 			html += '    <tr><td>サンプル</td></tr>';
