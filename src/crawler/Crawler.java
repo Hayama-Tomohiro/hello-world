@@ -1,9 +1,20 @@
 package crawler;
 
+import java.nio.charset.StandardCharsets;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.google.gson.Gson;
 
 public class Crawler {
 
@@ -34,6 +45,37 @@ public class Crawler {
             e.printStackTrace();
         }
 
+        Gson gson = new Gson();
+
+        // 取得したいJSON
+        String json = "http://zozo.jp/coupon/json/couponitemjson_10321_all.txt?_=1501808125476";
+
+        // HttpClientを、HttpClientBuilderで作成するか、簡易にHttpClientsから取得。戻り値の型は、CloseableHttpClient
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            // GETするURLを指定
+            HttpGet httpGet = new HttpGet(json);
+            // HTTPリクエストを行い、HTTPレスポンスを取得
+            try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+                // HTTPレスポンスよりHTTPステータスを取得
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                    // レスポンスのBODYを取得
+                    HttpEntity entity = response.getEntity();
+                    // JSONからの変換
+                    ItemWrapper itemWrapper = gson.fromJson(EntityUtils.toString(entity, StandardCharsets.UTF_8), ItemWrapper.class);
+                    for (ListItem item : itemWrapper.getItem().getData().getItemlist()) {
+                        System.out.println(item.getGoodsid() + "は、" + item.getPrice() + "円です。");
+                    }
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return;
     }
 
 }
